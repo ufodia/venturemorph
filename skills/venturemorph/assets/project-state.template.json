@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "project": {
+    "id": "replace-with-project-id",
+    "name": null,
+    "context": {
+      "offering": null,
+      "audience": null,
+      "market": null,
+      "stage": null,
+      "goal": null,
+      "constraints": []
+    }
+  },
+  "updated_at": null,
+  "evidence": [],
+  "assumptions": [],
+  "reviews": [],
+  "recommendations": [],
+  "experiments": []
+}

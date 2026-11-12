@@ -1,0 +1,4 @@
+interface:
+  display_name: "Venturemorph"
+  short_description: "Evolve product, growth, and brand with evidence"
+  default_prompt: "Use $venturemorph to review what changed in this project and recommend a product, growth, and brand decision with one measurable experiment."
