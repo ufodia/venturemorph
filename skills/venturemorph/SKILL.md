@@ -24,6 +24,8 @@ Turn a change in a project into a coherent product, growth, and brand decision. 
 
 Identify the project, decision, evaluation date, audience, stage, resources, and desired outcome. Resolve the consumer project's root from explicit user context; never assume the installed skill directory is the project.
 
+Use the user's specified review date/timezone or the host's user-facing time context. Do not infer today's date from a workspace or source filename. If no date is available, return an undated narrative rather than inventing dates for a JSON state.
+
 Use these as natural-language intents, not executable commands:
 
 | Intent | Main deliverable |
@@ -37,9 +39,11 @@ Use these as natural-language intents, not executable commands:
 
 For a narrow request, deliver the requested work and note material effects elsewhere. Do not force a full workshop or unrelated naming exercise.
 
-Read [evidence-and-change.md](references/evidence-and-change.md) for evidence conflicts, initial ideas, and reassessment. Read [state-format.md](references/state-format.md) when loading or saving history.
+Read [evidence-and-change.md](references/evidence-and-change.md) for evidence conflicts, initial ideas, and reassessment. Read [state-format.md](references/state-format.md) when loading or saving history. If a referenced attachment is unavailable, say so; use the workflow below without pretending to have opened it. Request the missing state reference/template only if needed to produce schema-valid JSON; otherwise return a clearly labeled narrative handoff.
 
-If available, load `.venturemorph/<project-id>/state.json` from the consumer project or a user-supplied handoff. Validate identity and freshness first. If no history exists, establish a baseline; do not invent an earlier review. Without file tools, return a portable state block.
+If available, load `.venturemorph/<project-id>/state.json` from the consumer project or a user-supplied handoff. Validate identity and freshness first. Use a stable, valid project ID and retain it through a rename. If no history exists, establish a baseline; do not invent an earlier review. Without file tools, return a portable state block.
+
+For Handoff, preserve existing evidence, decisions, complete experiment conditions, and open questions; do not invent new strategy or restart a review unless requested. Recover omitted context from an accessible latest report. If an older state lacks the original experiment contract, mark it incomplete rather than inventing missing conditions.
 
 ## 2. Reconstruct reality and identify the change
 
@@ -82,7 +86,7 @@ Read [brand-and-naming.md](references/brand-and-naming.md). Evaluate the name ag
 - **Evolve:** Retain the name and change positioning, descriptor, promise, or personality.
 - **Rename:** The name creates a material, evidenced limitation that a smaller change is unlikely to resolve; include transition costs and validation.
 
-Mark the verdict provisional when critical evidence is missing. Generate replacements only when requested or justified by the verdict.
+Mark the verdict provisional when critical evidence is missing. If no name has been selected, report **Not applicable: name not selected**, develop positioning and character, and generate candidates when requested. If an existing name was not supplied, report its fit unassessed instead of inventing it. Generate replacements only when requested or justified by the verdict.
 
 Translate personality into observable rules for onboarding, interface copy, errors, notifications, pricing, community, and marketing. Give a few do/avoid examples. Match depth to scope; a visual identity is not a default requirement.
 
@@ -96,7 +100,7 @@ When reviewing results, check cohort, denominator, measurement quality, duration
 
 ## 7. Deliver and preserve continuity
 
-Use [review.template.md](assets/review.template.md), omitting irrelevant sections. Lead with the action and why now. A full review contains:
+Use [review.template.md](assets/review.template.md) when available, omitting irrelevant sections; otherwise use the structure below. Lead with the action and why now. A full review contains:
 
 1. Current reality, evidence limits, and material change.
 2. Product-growth-brand tension and credible routes.
@@ -106,7 +110,11 @@ Use [review.template.md](assets/review.template.md), omitting irrelevant section
 6. What would reverse the recommendation and what needs the user's decision.
 7. A state/handoff update with actual persistence status.
 
-When file access and project artifact writes are within scope, save under `.venturemorph/<project-id>/` in the consumer project. Re-read state before writing, preserve unrelated records and user decisions, and avoid overwriting concurrent changes. Use atomic replacement when supported. Follow [state-format.md](references/state-format.md) and the template.
+When file access and project artifact writes are within scope, save under `.venturemorph/<project-id>/` in the consumer project. Re-read state before writing and preserve unrelated records and user decisions. Stage a candidate in a separate file, validate it, and replace the active state only if its prior contents are unchanged. Use atomic replacement when supported; retain the previous state on validation failure or a concurrent edit. Follow [state-format.md](references/state-format.md) and the template.
+
+Keep `project.name` and `project.context` as the attributable current/accepted baseline. Put unaccepted pivots, names, audiences, offerings, and changed constraints in recommendations, assumptions, and review snapshots. Do not promote a recommendation into the baseline merely because the review favors it.
+
+Preserve the complete experiment contract in the dated `reviews.summary` snapshot: decision, audience, intervention, comparator, recruitment/sample, baseline, metric/denominator/window, threshold and agreement status, timebox, money/time caps, guardrail, all four outcome actions, and brand implications. State unknowns explicitly. Carry that snapshot with a state-only handoff; record IDs alone do not preserve earlier conditions. See [project-state.example.json](assets/project-state.example.json) for a fictional populated example.
 
 Keep confidential history out of the installed skill and public repository. Record acceptance only from explicit user direction or an attributable existing decision. A request to evaluate is not acceptance. Supersede records with a reason; retain original rationale and evidence. Keep observation dates distinct from review dates and do not silently refresh stale evidence.
 

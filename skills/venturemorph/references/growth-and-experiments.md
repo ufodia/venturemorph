@@ -38,6 +38,8 @@ For a channel specify audience, message, initial action, core value event, repea
 - **Guardrail:** Main possible harm and observable stopping condition.
 - **Actions:** Continue, change, stop, and inconclusive; include any implications for brand.
 
+Make outcome rules mutually exclusive and state their precedence. A triggered stopping guardrail overrides a positive primary metric. Missing exposure or outcome data is inconclusive unless an independently observed stopping condition already applies.
+
 Do not infer causal lift from uncontrolled before/after data or small qualitative samples. Interview enthusiasm is not payment evidence. Clicks on a transparent test page measure expressed interest under its conditions, not purchase or retention.
 
 Without operational authorization, produce the plan. Do not launch campaigns, contact users, publish pages, or collect data.

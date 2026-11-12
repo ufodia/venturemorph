@@ -11,10 +11,10 @@ It is built for founders, product teams, and independent builders who want a con
 - **A change-aware review:** what changed, what still holds, and which earlier recommendations need to be kept, revised, or retired.
 - **Up to three prioritized improvements:** concrete actions connected to the product, its growth constraint, and the evidence available.
 - **One measurable experiment:** a hypothesis, target audience, primary metric, measurement window, and decision rule. Missing baselines stay unknown.
-- **A brand verdict:** **keep**, **evolve**, or **rename**, with reasoning about the name, positioning, and personality.
+- **A brand verdict:** **keep**, **evolve**, or **rename**, with reasoning about the name, positioning, and personality. Unnamed projects receive positioning and character guidance without an invented existing-name verdict.
 - **A portable project state:** a record of evidence, decisions, open questions, and prior advice that you can carry into the next review.
 
-Venturemorph separates **planned from shipped**, **hypothesis from fact**, and **proposed from accepted**. An AI recommendation does not become your decision just because it appeared in a review. It does not invent performance numbers, claim that a name is available, or promise a perfect or unique strategy.
+Venturemorph separates **planned from shipped**, **hypothesis from fact**, and **proposed from accepted**. An AI recommendation does not become your decision just because it appeared in a review. Its instructions prohibit invented performance numbers, unsupported or unscoped availability claims, and promises of a perfect or unique strategy. Real domain/handle checks are reported with their source, time, and scope.
 
 ## Install in Claude Code
 
@@ -117,13 +117,21 @@ Store each project's state in the project being reviewed:
 .venturemorph/<project-id>/state.json
 ```
 
-Start from [`assets/project-state.template.json`](skills/venturemorph/assets/project-state.template.json) when needed. This state belongs to the consumer project, not to the installed skill or this public repository. Keep it private and add `.venturemorph/` to that project's `.gitignore` unless you deliberately choose to version a sanitized record. Remove credentials, personal data, and confidential details before sharing.
+Start from [`assets/project-state.template.json`](skills/venturemorph/assets/project-state.template.json) when needed; see [the fictional populated example](skills/venturemorph/assets/project-state.example.json) for a complete protocol snapshot. This state belongs to the consumer project, not to the installed skill or this public repository. Keep it private and add `.venturemorph/` to that project's `.gitignore` unless you deliberately choose to version a sanitized record. Remove credentials, personal data, and confidential details before sharing.
 
 For a new session, provide the latest state and the changes since it was written. For another platform, transfer the state manually with the relevant evidence. Installing the same skill in two places does not synchronize project memory.
 
 ## Use with ChatGPT and other agents
 
-In ChatGPT, attach [`SKILL.md`](skills/venturemorph/SKILL.md), the relevant files from [`references/`](skills/venturemorph/references/), and your latest project-state file, then ask ChatGPT to follow the workflow. If your workspace supports native skill installation, install the complete `skills/venturemorph` folder according to that product's instructions.
+For attachment-based use in ChatGPT, provide:
+
+1. [`SKILL.md`](skills/venturemorph/SKILL.md).
+2. The four files in [`references/`](skills/venturemorph/references/): evidence/change, growth/experiments, brand/naming, and state format.
+3. [The review template](skills/venturemorph/assets/review.template.md) and [the state template](skills/venturemorph/assets/project-state.template.json); [the populated example](skills/venturemorph/assets/project-state.example.json) is optional.
+4. Your latest project state and relevant project evidence; include the latest report if the older state omits experiment conditions.
+5. [`scripts/check_state.py`](skills/venturemorph/scripts/check_state.py) only if the host can execute Python and you want automated state validation.
+
+Ask ChatGPT to follow the attached workflow. If a reference is missing, the skill returns the available review and labels the missing resource; it does not pretend to have read it. If your workspace supports native installation, install the complete `skills/venturemorph` folder according to that product's instructions.
 
 The repository includes [`agents/openai.yaml`](skills/venturemorph/agents/openai.yaml) for ChatGPT/Codex-facing metadata. Whether a host reads that metadata, installs skills natively, or permits file writes depends on the host. Attachment-based use is a manual workflow, and no universal ZIP upload or automatic cross-platform synchronization is assumed. See [compatibility and portability](docs/compatibility.md).
 

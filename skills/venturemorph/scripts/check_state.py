@@ -234,17 +234,24 @@ class _Validator:
             if target and target[0].get("status") != "superseded":
                 self.error(f"{path}.supersedes_id", "the replaced recommendation must have status 'superseded'")
         links = {source: target for source, target, _, _ in self.supersessions if isinstance(source, str)}
-        for source, _, _, path in self.supersessions:
-            if not isinstance(source, str):
+        # Cache complete walks so shared historical tails are visited only once.
+        reaches_cycle = {}
+        for source in links:
+            if source in reaches_cycle:
                 continue
-            seen = set()
+            chain = []
+            visiting = set()
             current = source
-            while current in links:
-                if current in seen:
-                    self.error(f"{path}.supersedes_id", "supersession cycle detected")
-                    break
-                seen.add(current)
+            while current in links and current not in reaches_cycle and current not in visiting:
+                visiting.add(current)
+                chain.append(current)
                 current = links[current]
+            cyclic = current in visiting or reaches_cycle.get(current, False)
+            for identifier in chain:
+                reaches_cycle[identifier] = cyclic
+        for source, _, _, path in self.supersessions:
+            if isinstance(source, str) and reaches_cycle.get(source, False):
+                self.error(f"{path}.supersedes_id", "supersession cycle detected")
 
 
 def validate_state(state, expected_project_id=None):
@@ -282,6 +289,9 @@ def main(argv=None):
         state = json.loads(content, object_pairs_hook=_unique_object, parse_constant=_reject_constant)
     except json.JSONDecodeError as error:
         print(f"INVALID: $: malformed JSON at line {error.lineno}, column {error.colno}: {error.msg}", file=sys.stderr)
+        return 1
+    except RecursionError:
+        print("INVALID: $: JSON nesting exceeds the decoder's supported depth", file=sys.stderr)
         return 1
     except ValueError as error:
         print(f"INVALID: $: {error}", file=sys.stderr)

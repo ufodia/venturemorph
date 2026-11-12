@@ -23,6 +23,8 @@ Use reasons and evidence, or mark unknown. Interpretation and pronunciation gues
 
 ## Choose a proportionate verdict
 
+If no name has been selected, use **Not applicable: name not selected** and develop positioning/character or requested name candidates. If an existing name was not supplied, say its fit is unassessed and ask only if it is needed for the requested decision. Do not invent a name to make a verdict possible.
+
 - **Keep:** Identity supports the direction; make targeted execution fixes.
 - **Evolve:** A descriptor, promise, message, tone, or behavior update can resolve the mismatch.
 - **Rename:** Material confusion or limiting associations are evidenced, and a smaller change is unlikely to resolve them. Account for recognition loss, migration, discoverability, redirects, accounts, and communication.

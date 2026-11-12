@@ -32,7 +32,7 @@ Deferred: [What and why.]
 
 ## Brand decision
 
-Verdict: [Keep/Evolve/Rename; provisional if necessary.]
+Verdict: [Keep/Evolve/Rename; provisional if necessary. If unnamed: Not applicable, name not selected. If the name was not supplied: fit unassessed.]
 Rationale: [Direction, expectations, equity, evidence, transition cost.]
 Name checks: [Verified checks/date and unverified items.]
 Character rules: [Concrete product/communication behavior.]
@@ -51,5 +51,5 @@ Character rules: [Concrete product/communication behavior.]
 
 Reversal condition: [Evidence that changes the recommendation.]
 User decision needed: [Material unresolved choice.]
-State update: [IDs/status changes/preserved decisions.]
+State update: [IDs/status changes/preserved decisions; current baseline distinct from proposals; complete experiment contract retained in the dated review snapshot.]
 Persistence: [Saved location and check result, or explicitly not saved.]

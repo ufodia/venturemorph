@@ -22,6 +22,8 @@ Every listed field is required unless marked optional. Objects reject extra fiel
 | `updated_at` | Date, or `null` only while every record collection is empty. Must be at least as recent as every record's `date`. |
 | `evidence`, `assumptions`, `reviews`, `recommendations`, `experiments` | Arrays of the records below. Empty arrays are valid. |
 
+Treat `project.name` and `project.context` as the attributable current or accepted baseline, not a recommended future state. Keep an unaccepted pivot, name, audience, or changed constraint in recommendations/assumptions and the review snapshot until an actual change or explicit acceptance supports updating the baseline. Keep `project.id` stable even if the accepted name changes.
+
 All record IDs follow `<project.id>:<kind>:<local-id>`. Kinds are `evidence`, `assumption`, `review`, `recommendation`, `experiment`. Local IDs begin with a letter or digit, then contain letters, digits, `.`, `_` or `-`; for example `acme:evidence:interview-01`. IDs are unique and immutable. The project/type prefix prevents foreign-project records and wrong-type references from silently becoming local facts. Every reference must resolve within the same file and correct collection. Reference arrays reject duplicates. Do not repurpose an old ID for a new observation or decision.
 
 ## Record fields
@@ -32,7 +34,7 @@ All records require `id` and `date`. `date` is the date the record was created o
 | --- | --- |
 | `evidence` | `type`: `user_report` or `observed`; `source`: retrievable location or explicit provenance description; `summary`: what the source actually supports. |
 | `assumptions` | `statement`; `status`: `unvalidated`, `supported` or `refuted`; `evidence_ids`: evidence-ID array. Supported/refuted assumptions require at least one reference. |
-| `reviews` | `summary`: dated narrative snapshot including current understanding, open questions and next focus; `evidence_ids`, `assumption_ids`, `recommendation_ids`, `experiment_ids`: corresponding ID arrays. |
+| `reviews` | `summary`: dated narrative snapshot including current understanding, decision statuses at review time, open questions, next focus, and the complete experiment contract below; `evidence_ids`, `assumption_ids`, `recommendation_ids`, `experiment_ids`: corresponding ID arrays. |
 | `recommendations` | `statement`; `status`: `proposed`, `accepted`, `rejected` or `superseded`; `rationale`; `evidence_ids`; `revisit_when`: concrete condition to reconsider; `acceptance_source`: string or `null`. |
 | `experiments` | `status`: `proposed`, `running`, `completed` or `cancelled`; `hypothesis`; `metric`; `threshold`; `timebox`; `guardrail`; `evidence_ids`; `recommendation_ids`; `result`. |
 
@@ -41,6 +43,12 @@ Recommendations become decisions only through explicit acceptance. `accepted` re
 Recommendations optionally have `supersedes_id` (a nonempty recommendation ID, omitted when unused). Only an `accepted` or formerly accepted `superseded` decision may carry it, and that source decision must retain a nonempty `acceptance_source` even after it is superseded. Its target must exist, differ from itself and have status `superseded`; cycles are invalid. This allows retained historical chains. A retired, unaccepted proposal may have status `superseded` and a null acceptance source if it has no `supersedes_id`. Keep rejected and superseded records instead of deleting inconvenient history.
 
 Experiment `timebox` is an object with `duration_days` (positive integer; booleans are invalid) and `started_at` (date or `null`). A known start date cannot be later than the experiment record's date. `threshold` is a string defining the success criterion, including units; `guardrail` defines the stop condition or acceptable risk boundary. `result` is `null` until a result exists, or an object with `summary` and a nonempty `evidence_ids` array. Proposed experiments require both a null start date and a null result. Running and completed experiments require a start date; completed experiments also require a result. Any nonnull result, including an interim or cancelled result, requires a start date. A cancelled experiment may remain unstarted with no result. Running or cancelled experiments may retain an evidence-backed interim result; completion never follows from elapsed time alone.
+
+## Preserve the complete experiment contract
+
+The compact experiment object is an index, not the entire protocol. In the associated dated `reviews.summary`, retain the decision, audience, intervention, comparator, recruitment/sample, baseline or its collection plan, event/numerator/denominator/window, proposed or agreed threshold, timebox, budget and effort caps, guardrail, and continue/change/stop/inconclusive actions. Preserve brand implications and which conditions were accepted at the time. Write unknowns explicitly.
+
+The snapshot must let a state-only handoff recover the same protocol; do not rely on an unavailable report or mutable record references. A separate report can add detail but cannot substitute for the snapshot. See [the fictional populated example](../assets/project-state.example.json). Older valid files may lack a complete snapshot: retain them, mark the protocol incomplete, and recover it from source material or the user before interpreting a result. Structural validation cannot assess narrative completeness.
 
 ## Session updates and limits
 

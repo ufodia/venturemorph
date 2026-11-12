@@ -58,15 +58,32 @@ class DistributionTests(unittest.TestCase):
 
     def test_installable_directory_has_all_runtime_resources(self):
         expected = [
-            "SKILL.md", "agents/openai.yaml", "references/evidence-and-change.md",
+            "SKILL.md", "LICENSE", "agents/openai.yaml", "references/evidence-and-change.md",
             "references/growth-and-experiments.md", "references/brand-and-naming.md",
             "references/state-format.md", "assets/review.template.md",
-            "assets/project-state.template.json", "scripts/check_state.py",
+            "assets/project-state.template.json", "assets/project-state.example.json",
+            "scripts/check_state.py",
         ]
         for relative in expected:
             with self.subTest(path=relative):
                 self.assertTrue((SKILL / relative).is_file())
         self.assertFalse((SKILL / ".venturemorph").exists())
+
+    def test_standalone_skill_preserves_the_same_license(self):
+        root_license = (ROOT / "LICENSE").read_text(encoding="utf-8")
+        self.assertEqual((SKILL / "LICENSE").read_text(encoding="utf-8"), root_license)
+        self.assertIn("Copyright (c) 2026 ufodia", root_license)
+
+    def test_populated_example_is_valid_without_promoting_proposals(self):
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("example_state_checker", SKILL / "scripts" / "check_state.py")
+        checker = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(checker)
+        state = json.loads((SKILL / "assets" / "project-state.example.json").read_text(encoding="utf-8"))
+        self.assertEqual(checker.validate_state(state, "stillcue"), [])
+        self.assertEqual(state["experiments"][0]["status"], "proposed")
+        self.assertIsNone(state["experiments"][0]["result"])
+        self.assertIsNone(state["experiments"][0]["timebox"]["started_at"])
 
 
 if __name__ == "__main__":

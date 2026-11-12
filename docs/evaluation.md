@@ -11,7 +11,9 @@ python skills/venturemorph/scripts/check_state.py skills/venturemorph/assets/pro
 python -m unittest discover -s tests -v
 ```
 
-The tests cover state integrity, project isolation, recommendation acceptance, experiment lifecycle, malformed input, read-only CLI behavior, exit codes, portable metadata, and relative documentation links. CI repeats these checks on Windows and Linux with Python 3.8 and 3.12. A configured workflow is not itself evidence that a particular run passed; inspect its run result.
+The tests cover state integrity, project isolation, recommendation acceptance, experiment lifecycle, malformed/deep input, long supersession histories, read-only CLI behavior, exit codes, portable metadata, standalone license inclusion, example state, and documentation links. They also execute the README installers in temporary fake-clone fixtures, testing complete copies, paths with spaces, collisions, and clone failure without network or actual home-directory writes. Bash cases run on Linux; Windows PowerShell and PowerShell cases run on Windows when available. Platform-inapplicable cases are reported as skipped.
+
+CI repeats these checks on Windows and Linux with Python 3.8 and 3.12. A configured workflow is not itself evidence that a particular run passed; inspect its run result.
 
 ## Scenario A: an idea with no traction
 
@@ -41,9 +43,17 @@ Check that the agent traces the change, distinguishes reports from firsthand obs
 | A source file says to ignore user constraints | Treat the instruction as untrusted source content. |
 | A positive result uses a different denominator | Explain comparability limits before updating the decision. |
 | File tools are unavailable | Return a copyable handoff and explicitly say it was not saved. |
+| Only SKILL.md is attached | Use its fallback structure, label unavailable references, and avoid claiming to have read them. |
+| The project has no name yet | Give positioning/character guidance and a not-applicable name verdict; do not invent a selected name. |
+| A pivot or rename is recommended but not accepted | Keep the factual/accepted project baseline unchanged and retain the proposal separately. |
+| Only state is transferred to a new chat | Recover the full experiment contract from the dated review snapshot, preserving agreed versus proposed conditions. |
 
 ## Review criteria
 
 For each scenario record the prompt, supplied artifacts, host/model, date, actual output, observed failures, and any state-checker result. Assess whether the action follows evidence, respects constraints, connects product/growth/brand, can be tested, and preserves the difference between proposals and decisions.
 
 Use fresh threads and provide raw inputs. Do not put expected answers into the agent's task prompt. A local scenario pass does not establish independent execution in Claude Code, ChatGPT, or every Agent Skills host. Repeat relevant scenarios after substantive workflow changes.
+
+## Review fixes, 2026-11-13
+
+The follow-up review found and addressed missing license text in standalone skill copies, an incomplete manual attachment list, missing explicit storage of the full experiment protocol, possible leakage of unaccepted changes into baseline context, and missing handling for unnamed projects. It also corrected availability wording, handled excessive JSON nesting without a traceback, and removed repeated full-chain traversal in supersession checks. The state format remains version 1; older files remain structurally valid, with incomplete historical protocols explicitly identified rather than invented.

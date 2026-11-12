@@ -208,6 +208,40 @@ class StateValidationTests(unittest.TestCase):
         state["recommendations"][0]["supersedes_id"] = "demo:recommendation:2"
         self.assert_invalid(state, "$.recommendations[0].supersedes_id", "cycle")
 
+    def test_long_supersession_chain_is_valid_in_either_record_order(self):
+        state = empty_state()
+        state["updated_at"] = "2026-02-28"
+        template = populated_state()["recommendations"][1]
+        for index in range(5000):
+            record = dict(template, id=f"demo:recommendation:{index}", status="superseded", evidence_ids=[])
+            if index:
+                record["supersedes_id"] = f"demo:recommendation:{index - 1}"
+            else:
+                record.pop("supersedes_id")
+            state["recommendations"].append(record)
+        state["recommendations"][-1]["status"] = "accepted"
+        self.assertEqual(CHECK.validate_state(state), [])
+        state["recommendations"].reverse()
+        self.assertEqual(CHECK.validate_state(state), [])
+
+    def test_supersession_cycle_reports_members_and_branching_paths(self):
+        state = empty_state()
+        state["updated_at"] = "2026-02-28"
+        template = populated_state()["recommendations"][1]
+        targets = {0: 1, 1: 2, 2: 1, 3: 0, 4: 2, 5: 6}
+        for index in range(7):
+            record = dict(template, id=f"demo:recommendation:{index}", status="superseded", evidence_ids=[])
+            if index in targets:
+                record["supersedes_id"] = f"demo:recommendation:{targets[index]}"
+            else:
+                record.pop("supersedes_id")
+            state["recommendations"].append(record)
+        errors = CHECK.validate_state(state)
+        self.assertEqual(
+            errors,
+            [f"$.recommendations[{index}].supersedes_id: supersession cycle detected" for index in range(5)],
+        )
+
     def test_superseding_decision_retains_acceptance_source_after_supersession(self):
         for source in (None, "", "   ", False):
             with self.subTest(source=source):
@@ -331,6 +365,15 @@ class CommandLineTests(unittest.TestCase):
                 result = self.run_file(content)
                 self.assertEqual(result.returncode, 1, result.stderr)
                 self.assertIn(message, result.stderr)
+
+    def test_deeply_nested_json_reports_invalid_without_traceback(self):
+        contents = b"[" * 10000 + b"0" + b"]" * 10000
+        result = self.run_file(contents)
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertIn("INVALID: $:", result.stderr)
+        self.assertIn("nesting", result.stderr)
+        self.assertNotIn("Traceback", result.stderr)
+        self.assertEqual(result.stdout, "")
 
     def test_io_and_usage_errors_exit_two(self):
         with tempfile.TemporaryDirectory() as directory:

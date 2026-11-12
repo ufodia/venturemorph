@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "project": {
+    "id": "stillcue",
+    "name": "StillCue",
+    "context": {
+      "offering": "Fictional, unbuilt private break-reminder idea",
+      "audience": "Freelance designers",
+      "market": null,
+      "stage": "Idea; no implementation or validation",
+      "goal": "Learn whether user-controlled cues create wanted breaks",
+      "constraints": [
+        "At most four founder hours weekly",
+        "At most $50 monthly",
+        "Private, worker-controlled reminders; no individual monitoring"
+      ]
+    }
+  },
+  "updated_at": "2026-11-13",
+  "evidence": [
+    {
+      "id": "stillcue:evidence:brief-01",
+      "date": "2026-11-13",
+      "type": "user_report",
+      "source": "Fictional owner brief in this example; not real customer research",
+      "summary": "Owner describes an unbuilt idea, no interviews or metrics, four hours weekly, $50 monthly, and an explicit requirement for private worker-controlled reminders."
+    }
+  ],
+  "assumptions": [
+    {
+      "id": "stillcue:assumption:value-01",
+      "date": "2026-11-13",
+      "statement": "A quiet cue under the worker's control may help suitable designers take wanted breaks.",
+      "status": "unvalidated",
+      "evidence_ids": []
+    }
+  ],
+  "recommendations": [
+    {
+      "id": "stillcue:recommendation:control-01",
+      "date": "2026-11-13",
+      "statement": "Preserve private, worker-controlled reminders and no individual monitoring.",
+      "status": "accepted",
+      "rationale": "The fictional owner explicitly states this constraint.",
+      "evidence_ids": [
+        "stillcue:evidence:brief-01"
+      ],
+      "revisit_when": "The owner explicitly revises this constraint; a proposed growth route alone cannot change it.",
+      "acceptance_source": "Explicit instruction in the fictional owner brief dated 2026-11-13"
+    },
+    {
+      "id": "stillcue:recommendation:discovery-01",
+      "date": "2026-11-13",
+      "statement": "Discuss the proposed bounded discovery trial before committing to a build.",
+      "status": "proposed",
+      "rationale": "Demand and the value of cues remain untested; capacity is limited.",
+      "evidence_ids": [
+        "stillcue:evidence:brief-01"
+      ],
+      "revisit_when": "Trial results resolve value, or recruitment/control constraints make the design infeasible.",
+      "acceptance_source": null
+    }
+  ],
+  "experiments": [
+    {
+      "id": "stillcue:experiment:discovery-01",
+      "date": "2026-11-13",
+      "status": "proposed",
+      "hypothesis": "Worker-controlled quiet cues help suitable freelance designers take wanted breaks without unwanted interruption.",
+      "metric": "Qualifying participants divided by all five enrolled over five cue workdays; full event definition and protocol are frozen in stillcue:review:baseline-01.",
+      "threshold": "Proposed, not agreed: at least three of five qualify; apply guardrail and inconclusive rules in the review snapshot.",
+      "timebox": {
+        "duration_days": 14,
+        "started_at": null
+      },
+      "guardrail": "Disable an individual's cue on request or unwanted paid-work interruption; stop after any privacy breach or unwanted interruption reports from two participants.",
+      "evidence_ids": [
+        "stillcue:evidence:brief-01"
+      ],
+      "recommendation_ids": [
+        "stillcue:recommendation:discovery-01"
+      ],
+      "result": null
+    }
+  ],
+  "reviews": [
+    {
+      "id": "stillcue:review:baseline-01",
+      "date": "2026-11-13",
+      "summary": "Fictional example only, reviewed 2026-11-13. Current baseline: StillCue is an unbuilt private break-reminder idea for freelance designers. Four founder hours weekly and $50 monthly are reported constraints. Privacy and worker control are accepted; discovery, descriptor, and experiment below are proposed and have not been run. No demand, retention, payment, or name availability has been established.\n\nBrand: provisionally keep StillCue and test the descriptor 'Break reminders, on your terms.' Interpretation and spoken use remain untested. Any later team offer is an unaccepted possibility and does not replace the current baseline.\n\nComplete proposed experiment contract (snapshot for stillcue:experiment:discovery-01):\nDecision: whether to build a minimal user-controlled reminder prototype.\nAudience: five freelance designers who can describe a recent missed break during client work.\nRecruitment/sample: invite through one existing designer community where invitations are permitted; target five voluntary participants. No invitations have been sent.\nIntervention: participants configure one quiet break cue and can skip, pause, or disable it in an existing tool they control; no new app or data collection is authorized by this plan.\nComparator/baseline: two workdays logging intended breaks under each participant's usual routine before the five cue workdays. The baseline is not yet collected.\nMetric: numerator = enrolled participants who voluntarily use the cue on at least three of five cue workdays, report at least one wanted break, and report zero unwanted interruptions to paid work; denominator = all five enrolled participants, including dropouts. Window = five cue workdays following the two baseline days. This is an exploratory behavioral signal, not a causal health claim.\nThreshold/agreement: proposed, not agreed; at least three of five qualify to continue limited prototype discovery.\nTimebox: fourteen calendar days; no start date exists. Collect two baseline workdays and five cue workdays per participant within that window.\nBudget/effort cap: $0 planned incremental spend; no more than eight founder hours over two weeks and no more than four in either week.\nGuardrail: disable an individual's cue immediately after an unwanted paid-work interruption or a request; stop the trial after any privacy breach or unwanted interruption reports from two participants.\nContinue: at least three of five qualify, the complete observation window is available, and no stopping guardrail triggers.\nChange: one or two of five qualify without a stopping guardrail; change timing or explore worker-initiated prompts before another test.\nStop: zero of five qualify with complete records, or a stopping guardrail triggers regardless of the metric.\nInconclusive: fewer than five enroll, windows are incomplete, or data cannot establish the metric; do not mark success or failure from the observed subset alone.\nBrand implication: only a welcome, controllable cue supports the calm, user-controlled promise; disruption means revisiting the mechanism and message before acquisition.\n\nOpen questions: problem frequency, compatible tool behavior, willingness to pay, interpretation/recall of the name, and privacy implementation. Next focus: discuss and agree or revise this proposal; acceptance is not implied by the review.",
+      "evidence_ids": [
+        "stillcue:evidence:brief-01"
+      ],
+      "assumption_ids": [
+        "stillcue:assumption:value-01"
+      ],
+      "recommendation_ids": [
+        "stillcue:recommendation:control-01",
+        "stillcue:recommendation:discovery-01"
+      ],
+      "experiment_ids": [
+        "stillcue:experiment:discovery-01"
+      ]
+    }
+  ]
+}
