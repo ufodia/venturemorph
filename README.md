@@ -218,3 +218,11 @@ Format and Claude Code installation guidance were checked against the official [
 ---
 
 Released under the [MIT license](LICENSE). Copyright © 2026 [ufodia](https://github.com/ufodia).
+
+## Support this project
+
+<p align="center">
+  <a href="https://buymeacoffee.com/ufodia">
+    <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me a Coffee" height="60">
+  </a>
+</p>
