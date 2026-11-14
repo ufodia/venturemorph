@@ -215,6 +215,10 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for scope and validation guidance.
 
 Format and Claude Code installation guidance were checked against the official [Claude Code skills documentation](https://code.claude.com/docs/en/skills) and [Agent Skills specification](https://agentskills.io/specification) on **2026-11-13**. Product support may change; see the compatibility notes before adapting the install to another host.
 
+## Related project
+
+[**IntentWeft**](https://github.com/ufodia/intentweft) helps review AI-assisted changes against project requirements, connecting findings to evidence and practical verification.
+
 ---
 
 Released under the [MIT license](LICENSE). Copyright © 2026 [ufodia](https://github.com/ufodia).
